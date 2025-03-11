@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.0000" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-03-11T14:23:56" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Math Tests" timestamp="2025-03-11T14:23:56" tests="2" file="D:\Study\DevOpsSec\CA1-20225431\SimpleApplication\test\sample.test.js" time="0.0000" failures="0">
+    <testcase name="Math Tests should add numbers correctly" time="0.0000" classname="should add numbers correctly">
+    </testcase>
+    <testcase name="Math Tests should subtract numbers correctly" time="0.0000" classname="should subtract numbers correctly">
+    </testcase>
+  </testsuite>
+</testsuites>
