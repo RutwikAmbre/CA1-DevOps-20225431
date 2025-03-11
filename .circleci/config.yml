@@ -1,0 +1,31 @@
+version: 2.1
+
+workflows:
+    version: 2
+    build:
+        jobs:
+            - build:
+                filters:
+                    branches:
+                        only:
+                            - main  # Fixed space before main
+
+jobs:
+    build:
+        working_directory: ~/ExampleApplication  # Fixed spelling
+        docker:
+            - image: cimg/node:10.16.3  # Updated to the latest recommended image
+        steps:
+            - checkout  # Fixed missing space
+            - run:
+                name: update-npm
+                command: sudo npm install -g npm@5
+            - restore_cache:
+                key: dependency-cache-{{ checksum "package-lock.json" }}  # Fixed spacing
+            - run:
+                name: install-npm
+                command: npm install
+            - save_cache:
+                key: dependency-cache-{{ checksum "package-lock.json" }}  # Fixed spacing
+                paths:
+                    - ./node_modules
