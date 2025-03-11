@@ -8,11 +8,11 @@ workflows:
                 filters:
                     branches:
                         only:
-                            - main  # Fixed space before main
+                            - main
 
 jobs:
     build:
-        working_directory: ~/ExampleApplication  # Fixed spelling
+        working_directory: ~/ExampleApplication
         docker:
             - image: cimg/node:10.16.3  # Updated to the latest recommended image
         steps:
