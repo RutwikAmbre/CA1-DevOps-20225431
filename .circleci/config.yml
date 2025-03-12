@@ -54,6 +54,9 @@ jobs:
           name: Install Snyk
           command: sudo npm install -g snyk  # Install the Snyk security tool globally
       - run:
+          name: Authenticate with Snyk
+          command: snyk auth $SNYK_TOKEN  # Using environment variable
+      - run:
           name: Run Snyk Security Scan
           command: snyk test || true  # Run Snyk test, but allow failures (|| true) to prevent build failure
       - run:
