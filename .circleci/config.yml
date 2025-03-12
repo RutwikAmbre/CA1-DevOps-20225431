@@ -52,7 +52,7 @@ jobs:
       - checkout  # Check out the source code
       - run:
           name: Install Snyk
-          command: npm install -g snyk --unsafe-perm=true  # Install the Snyk security tool globally
+          command: sudo npm install -g snyk  # Install the Snyk security tool globally
       - run:
           name: Run Snyk Security Scan
           command: snyk test || true  # Run Snyk test, but allow failures (|| true) to prevent build failure
