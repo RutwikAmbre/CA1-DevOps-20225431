@@ -1,49 +1,65 @@
 version: 2.1
 
 workflows:
-    version: 2
-    build:
-        jobs:
-            - build:
-                filters:
-                    branches:
-                        only:
-                            - main
-            - deploy:
-                filters:
-                    branches:
-                        only:
-                            - main
-                requires:
-                    - build
-        
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - main  # Only run the build job for the 'main' branch
+      - deploy:
+          filters:
+            branches:
+              only:
+                - main  # Only deploy on the 'main' branch
+          requires:
+            - build  # Ensure the 'deploy' job runs after the 'build' job
 
 jobs:
-    build:
-        working_directory: ~/ExampleApplication
-        docker:
-            - image: cimg/node:10.16.3  # Uses a minimal Node image
-        steps:
-            - checkout
-            - run:
-                name: update-npm
-                command: npm install -g npm@5
-            - restore_cache:
-                key: dependency-cache-{{ checksum "package-lock.json" }}
-            - run:
-                name: install-npm
-                command: npm install
-            - run:
-                name: test-run
-                command: npm run test
-            - save_cache:
-                key: dependency-cache-{{ checksum "package-lock.json" }}
-                paths:
-                    - ./node_modules
-    deploy:
-        docker:
-            - image: cimg/node:10.16.3
-        steps:
-            - run:
-                name: deploy-app
-                command: ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS "export SERVER=\"$SERVER\"; export PRIVATE_KEY=\"$PRIVATE_KEY\"; rm -rf CA1-DevOps-20225431/; git clone https://github.com/RutwikAmbre/CA1-DevOps-20225431.git; source CA1-DevOps-20225431/deployApp.sh"
+  build:
+    working_directory: ~/ExampleApplication  # Define the working directory
+    docker:
+      - image: cimg/node:10.16.3  # Use the minimal Node.js image (version 10.16.3)
+    steps:
+      - checkout  # Check out the source code from the repository
+      - run:
+          name: update-npm
+          command: npm install -g npm@5  # Install a specific version of npm globally
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}  # Restore cached dependencies based on package-lock.json checksum
+      - run:
+          name: install-npm
+          command: npm install  # Install project dependencies
+      - run:
+          name: test-run
+          command: npm run test  # Run the tests
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}  # Cache the dependencies for future builds
+          paths:
+            - ./node_modules  # Cache the node_modules directory
+
+  # Security scan job to check for vulnerabilities
+  security_scan:
+    docker:
+      - image: circleci/node:latest  # Use the latest Node.js image for the security scan
+    steps:
+      - checkout  # Check out the source code
+      - run:
+          name: Install Snyk
+          command: npm install -g snyk  # Install the Snyk security tool globally
+      - run:
+          name: Run Snyk Security Scan
+          command: snyk test || true  # Run Snyk test, but allow failures (|| true) to prevent build failure
+      - run:
+          name: Monitor Security Issues
+          command: snyk monitor  # Monitor the project for security issues
+
+  deploy:
+    docker:
+      - image: cimg/node:10.16.3  # Use the same Node.js image for deployment
+    steps:
+      - run:
+          name: deploy-app
+          command: ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS "export SERVER=\"$SERVER\"; export PRIVATE_KEY=\"$PRIVATE_KEY\"; rm -rf CA1-DevOps-20225431/; git clone https://github.com/RutwikAmbre/CA1-DevOps-20225431.git; source CA1-DevOps-20225431/deployApp.sh"  # Deploy the app to the EC2 instance
