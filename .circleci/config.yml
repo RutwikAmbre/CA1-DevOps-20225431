@@ -9,13 +9,21 @@ workflows:
             branches:
               only:
                 - main  # Only run the build job for the 'main' branch
+      - security_scan:  # Add security_scan job here
+          filters:
+            branches:
+              only:
+                - main  # Only run security scan on the 'main' branch
+          requires:
+            - build  # Ensure security scan job runs after the build job
       - deploy:
           filters:
             branches:
               only:
                 - main  # Only deploy on the 'main' branch
           requires:
-            - build  # Ensure the 'deploy' job runs after the 'build' job
+            - build  # Ensure deploy job runs after the build job
+            - security_scan  # Ensure deploy job runs after the security scan job
 
 jobs:
   build:
