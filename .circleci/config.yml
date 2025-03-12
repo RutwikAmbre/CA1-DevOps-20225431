@@ -22,12 +22,12 @@ jobs:
     build:
         working_directory: ~/ExampleApplication
         docker:
-            - image: node:18
+            - image: cimg/node:16
         steps:
             - checkout
             - run:
                 name: update-npm
-                command: npm install -g npm@latest
+                command: npm install -g npm@latest 
             - restore_cache:
                 key: dependency-cache-{{ checksum "package-lock.json" }}
             - run:
@@ -42,7 +42,7 @@ jobs:
                     - ./node_modules
     deploy:
         docker:
-            - image: node:18
+            - image: cimg/node:16
         steps:
             - run:
                 name: deploy-app
