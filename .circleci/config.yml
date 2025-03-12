@@ -22,7 +22,7 @@ jobs:
     build:
         working_directory: ~/ExampleApplication
         docker:
-            - image: cimg/node:18
+            - image: node:18
         steps:
             - checkout
             - run:
@@ -42,7 +42,7 @@ jobs:
                     - ./node_modules
     deploy:
         docker:
-            - image: cimg/node:18
+            - image: node:18
         steps:
             - run:
                 name: deploy-app
