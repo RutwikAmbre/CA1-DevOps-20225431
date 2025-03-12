@@ -10,10 +10,6 @@ workflows:
               only:
                 - main  # Only run the build job for the 'main' branch
       - security_scan:  # Add security_scan job here
-          filters:
-            branches:
-              only:
-                - main  # Only run security scan on the 'main' branch
           requires:
             - build  # Ensure security scan job runs after the build job
       - deploy:
@@ -56,7 +52,7 @@ jobs:
       - checkout  # Check out the source code
       - run:
           name: Install Snyk
-          command: npm install -g snyk  # Install the Snyk security tool globally
+          command: npm install -g snyk --unsafe-perm=true  # Install the Snyk security tool globally
       - run:
           name: Run Snyk Security Scan
           command: snyk test || true  # Run Snyk test, but allow failures (|| true) to prevent build failure
