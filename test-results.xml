@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.0000" tests="2" failures="0">
-  <testsuite name="Root Suite" timestamp="2025-03-11T14:23:56" tests="0" time="0.0000" failures="0">
+<testsuites name="Mocha Tests" time="0.0580" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-03-12T13:16:45" tests="0" time="0.0000" failures="0">
   </testsuite>
-  <testsuite name="Math Tests" timestamp="2025-03-11T14:23:56" tests="2" file="D:\Study\DevOpsSec\CA1-20225431\SimpleApplication\test\sample.test.js" time="0.0000" failures="0">
-    <testcase name="Math Tests should add numbers correctly" time="0.0000" classname="should add numbers correctly">
+  <testsuite name="Math Tests" timestamp="2025-03-12T13:16:45" tests="2" file="D:\Study\DevOpsSec\CA1-20225431\SimpleApplication\test\sample.test.js" time="0.0010" failures="0">
+    <testcase name="Math Tests should add numbers correctly" time="0.0010" classname="should add numbers correctly">
     </testcase>
     <testcase name="Math Tests should subtract numbers correctly" time="0.0000" classname="should subtract numbers correctly">
+    </testcase>
+  </testsuite>
+  <testsuite name="EJS Template Rendering" timestamp="2025-03-12T13:16:45" tests="1" file="D:\Study\DevOpsSec\CA1-20225431\SimpleApplication\test\sample2.test.js" time="0.0570" failures="0">
+    <testcase name="EJS Template Rendering should render the homepage with the correct title" time="0.0570" classname="should render the homepage with the correct title">
     </testcase>
   </testsuite>
 </testsuites>
