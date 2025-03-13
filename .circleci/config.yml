@@ -30,7 +30,7 @@ jobs:
       - checkout  # Check out the source code from the repository
       - run:
           name: update-npm
-          command: sudo npm install -g npm@5
+          command: sudo npm install -g npm@9
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}  # Restore cached dependencies based on package-lock.json
       - run:
