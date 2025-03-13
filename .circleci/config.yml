@@ -30,7 +30,7 @@ jobs:
       - checkout  # Check out the source code from the repository
       - run:
           name: update-npm
-          command: npm install -g npm@5
+          command: sudo npm install -g npm@5
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}  # Restore cached dependencies based on package-lock.json
       - run:
@@ -67,7 +67,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/node:18.17.0 
+      - image: cimg/node:18.17.0
     steps:
       - run:
           name: deploy-app
