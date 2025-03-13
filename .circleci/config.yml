@@ -44,12 +44,11 @@ jobs:
           paths:
             - ./node_modules  # Cache the node_modules directory
 
-  # Security scan job to check for vulnerabilities
   security_scan:
     docker:
-      - image: circleci/node:latest  # Use the latest Node.js image for the security scan
+      - image: circleci/node:latest
     steps:
-      - checkout  # Check out the source code
+      - checkout
       - run:
           name: Install Snyk
           command: sudo npm install -g snyk  # Install the Snyk security tool globally
@@ -58,7 +57,7 @@ jobs:
           command: snyk auth $SNYK_TOKEN  # Using environment variable
       - run:
           name: Run Snyk Security Scan
-          command: snyk test || true  # Run Snyk test, but allow failures (|| true) to prevent build failure
+          command: snyk test || true  # Run Snyk test
       - run:
           name: Monitor Security Issues
           command: snyk monitor  # Monitor the project for security issues
