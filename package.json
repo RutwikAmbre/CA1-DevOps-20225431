@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "npx mocha --reporter mocha-circleci-reporter test/*.js",
+    "test": "mocha --reporter mocha-jenkins-reporter --reporter-options mochaFile=results.xml test/*.js",
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "express": "^4.21.2",
     "growl": "^1.10.5",
     "http-errors": "~1.6.3",
+    "mocha-jenkins-reporter": "^0.4.8",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
