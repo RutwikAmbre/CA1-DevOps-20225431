@@ -23,16 +23,16 @@ workflows:
 
 jobs:
   build:
-    working_directory: ~/ExampleApplication  # Define the working directory
+    working_directory: ~/ExampleApplication
     docker:
-      - image: cimg/node:10.16.3  # Use the minimal Node.js image (version 10.16.3)
+      - image: cimg/node:10.16.3 
     steps:
       - checkout  # Check out the source code from the repository
       - run:
           name: update-npm
-          command: npm install -g npm@5  # Install a specific version of npm globally
+          command: npm install -g npm@5
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}  # Restore cached dependencies based on package-lock.json checksum
+          key: dependency-cache-{{ checksum "package-lock.json" }}  # Restore cached dependencies based on package-lock.json
       - run:
           name: install-npm
           command: npm install  # Install project dependencies
@@ -67,7 +67,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/node:10.16.3  # Use the same Node.js image for deployment
+      - image: cimg/node:10.16.3 
     steps:
       - run:
           name: deploy-app
