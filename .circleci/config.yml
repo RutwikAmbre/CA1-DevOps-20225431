@@ -8,18 +8,18 @@ workflows:
           filters:
             branches:
               only:
-                - main  # Only run the build job for the 'main' branch
-      - security_scan:  # Add security_scan job here
+                - main  # Only run the build job for the main branch
+      - security_scan: 
           requires:
-            - build  # Ensure security scan job runs after the build job
+            - build
       - deploy:
           filters:
             branches:
               only:
-                - main  # Only deploy on the 'main' branch
+                - main  # Only deploy on the main branch
           requires:
-            - build  # Ensure deploy job runs after the build job
-            - security_scan  # Ensure deploy job runs after the security scan job
+            - build  
+            - security_scan  
 
 jobs:
   build:
@@ -37,12 +37,15 @@ jobs:
           name: install-npm
           command: npm install  # Install project dependencies
       - run:
+          name: audit-packages
+          command: npm audit    # Checking vulnerabilities
+      - run:
           name: test-run
           command: npm run test  # Run the tests
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}  # Cache the dependencies for future builds
           paths:
-            - ./node_modules  # Cache the node_modules directory
+            - ./node_modules
 
   security_scan:
     docker:
