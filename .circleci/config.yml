@@ -60,7 +60,7 @@ jobs:
           command: snyk auth $SNYK_TOKEN  # Using environment variable
       - run:
           name: Run Snyk Security Scan
-          command: snyk test || true  # Run Snyk test
+          command: snyk test # Run Snyk test
       - run:
           name: Monitor Security Issues
           command: snyk monitor  # Monitor the project for security issues
